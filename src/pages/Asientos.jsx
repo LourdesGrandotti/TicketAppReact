@@ -1,13 +1,124 @@
-// Migrar desde: frontend/asientos.html + frontend/js/asientos.js (156 líneas) + js/modules/seating.js (501 líneas)
-// Complejidad: ALTA — conviene 2 personas. Es el mapa de butacas: selección
-// de sector/butaca, bloqueos temporales, cálculo de precio. Pensar bien qué
-// va en estado local (useState del componente) vs qué necesita vivir en
-// CartContext para sobrevivir la navegación a Carrito.
+// Migrado desde: frontend/asientos.html + frontend/js/asientos.js + js/modules/seating.js
+// Responsable: Grandotti Lourdes
+// Complejidad: ALTA — mapa de butacas, selección, límite de asientos, sincronización multi-pestaña
+// Estado del carrito gestionado por CartContext (src/context/CartContext.jsx)
+
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import MatchBanner from '../components/MatchBanner';
+import SeatsGrid from '../components/SeatsGrid';
+import SummaryPanel from '../components/SummaryPanel';
+import useSeating from '../hooks/useSeating';
+
 function Asientos() {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  // Parámetros recibidos desde Estadio: ?sector=A1&partido=3&cant=2
+  const sector = searchParams.get('sector') || 'A1';
+  const partido = searchParams.get('partido') || '';
+  const cant = parseInt(searchParams.get('cant'), 10) || 1;
+  const limit = Math.max(1, Math.min(cant, 4));
+
+  const {
+    seats,
+    selectedSeats,
+    alerta,
+    toggleSeat,
+    removeSeat,
+    clearSelections,
+  } = useSeating(sector, partido, limit);
+
+  // Asientos seleccionados con todos sus datos para el panel lateral
+  const selectedSeatsData = seats.filter((s) => selectedSeats.includes(s.idAsiento));
+
+  const handleVolver = (e) => {
+    e.preventDefault();
+    clearSelections();
+    navigate(partido ? `/estadio?partido=${partido}` : '/estadio');
+  };
+
+  const handleContinue = () => {
+    navigate(partido ? `/carrito?partido=${partido}` : '/carrito');
+  };
+
   return (
-    <div className="container py-5">
-      <h1>Elegí tus asientos</h1>
-      {/* TODO: portar mapa de sectores/butacas y lógica de bloqueo (ver seating.js) */}
+    <div className="d-flex flex-column flex-grow-1 bg-white">
+      {/* Banner del partido */}
+      {partido && <MatchBanner partidoId={partido} />}
+
+      {/* Encabezado: botón volver + título del sector */}
+      <div className="ta-sec-header d-flex flex-wrap align-items-center gap-3 py-3 px-4">
+        <a
+          href="#"
+          onClick={handleVolver}
+          className="ta-btn-volver d-inline-flex align-items-center gap-1 text-decoration-none"
+          aria-label="Volver al mapa del estadio"
+        >
+          <i className="bx bx-chevron-left" /> Volver
+        </a>
+        <div className="d-flex flex-column align-items-start m-0">
+          <span className="ta-sector-titulo fw-bold" id="sector-titulo">
+            SECTOR {sector}
+          </span>
+          <p className="text-secondary fw-semibold fs-6 mb-0 mt-1" id="limite-label">
+            Seleccioná hasta {limit} {limit === 1 ? 'asiento' : 'asientos'}
+          </p>
+        </div>
+      </div>
+
+      {/* Layout principal: grilla | panel de resumen */}
+      <main className="ta-main flex-grow-1 px-4 py-3" aria-label="Selección de asientos">
+        <div className="row g-4">
+
+          {/* Columna izquierda: grilla de asientos */}
+          <section className="col-12 col-lg-8" aria-label="Mapa de asientos del sector">
+
+            {/* Alerta de límite */}
+            {alerta && (
+              <div
+                className="alert alert-danger py-2 px-3 fw-semibold text-center mb-3"
+                role="alert"
+              >
+                {alerta}
+              </div>
+            )}
+
+            {/* Grilla de asientos */}
+            <div className="border rounded-4 p-4 shadow-sm bg-light">
+              <SeatsGrid seats={seats} onSeatClick={toggleSeat} />
+            </div>
+
+            {/* Leyenda de estados */}
+            <div className="ta-legend mt-4" role="list" aria-label="Leyenda de estados de asientos">
+              <div className="ta-legend-item" role="listitem">
+                <span className="ta-leg-box unavailable-box" />
+                No disponible
+              </div>
+              <div className="ta-legend-item" role="listitem">
+                <span
+                  className="ta-leg-box"
+                  style={{ backgroundColor: '#d0e1fd', border: '1px solid #4a90e2' }}
+                />
+                Disponible
+              </div>
+              <div className="ta-legend-item" role="listitem">
+                <span className="ta-leg-box selected-box" />
+                Asiento seleccionado
+              </div>
+            </div>
+          </section>
+
+          {/* Columna derecha: panel de resumen y precio */}
+          <section className="col-12 col-lg-4">
+            <SummaryPanel
+              selectedSeatsData={selectedSeatsData}
+              onRemoveSeat={removeSeat}
+              onContinue={handleContinue}
+            />
+          </section>
+
+        </div>
+      </main>
     </div>
   );
 }

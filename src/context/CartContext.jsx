@@ -16,6 +16,12 @@ export function CartProvider({ children }) {
 
   useEffect(() => {
     localStorage.setItem("carrito", JSON.stringify(items));
+    
+    // Sincronizar reserva de asientos para compatibilidad y la burbuja de la navbar
+    const seatsInCart = items
+      .filter((item) => item.tipo === "asiento")
+      .map((item) => item.id);
+    sessionStorage.setItem("ticketapp_mis_asientos_seleccionados", JSON.stringify(seatsInCart));
   }, [items]);
 
   const agregarItem = (item) => setItems((prev) => [...prev, item]);
