@@ -5,7 +5,7 @@
 // useAuth().esAdmin es true — agregar esa protección de ruta.
 function Admin() {
   return (
-    <div className="container py-5">
+    <div className="container-fluid px-4 py-5">
       <h1>Panel de administración</h1>
       {/* TODO: portar tablas/formularios de admin.html y lógica de admin/*.js */}
     </div>

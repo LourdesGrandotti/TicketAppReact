@@ -21,7 +21,7 @@ function Login() {
   }
 
   return (
-    <div className="container py-5">
+    <div className="container-fluid px-4 py-5">
       <h1>Iniciar sesión</h1>
       <form onSubmit={handleSubmit}>
         {/* TODO: portar estructura/estilos reales de login.html */}
