@@ -6,7 +6,7 @@
 // en src/components/.
 function Partidos() {
   return (
-    <div className="container py-5">
+    <div className="container-fluid px-4 py-5">
       <h1>Partidos</h1>
       {/* TODO: listar partidos (¿vienen de un JSON local o del backend?), filtros y <MatchCard /> */}
     </div>

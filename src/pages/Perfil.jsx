@@ -9,7 +9,7 @@ function Perfil() {
   const { usuario } = useAuth();
 
   return (
-    <div className="container py-5">
+    <div className="container-fluid px-4 py-5">
       <h1>Mi cuenta</h1>
       {/* TODO: portar datos reales + historial (ver profile.js) */}
       <p>{usuario?.email ?? "No hay usuario logueado"}</p>

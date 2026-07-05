@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useCart } from '../context/CartContext.jsx';
 
 // Precios configurables por zona de estadio
@@ -19,9 +19,18 @@ export default function useSeating(sectorId = 'A1', partidoId = '', initialLimit
   const [alerta, setAlerta] = useState('');
 
   // Derivamos nuestros asientos seleccionados directamente de CartContext
-  const selectedSeats = items
-    .filter((item) => item.tipo === 'asiento' && String(item.partidoId) === String(partidoId) && item.sector === sectorId)
-    .map((item) => item.id);
+  const selectedSeats = useMemo(
+    () =>
+      items
+        .filter(
+          (item) =>
+            item.tipo === 'asiento' &&
+            String(item.partidoId) === String(partidoId) &&
+            item.sector === sectorId
+        )
+        .map((item) => item.id),
+    [items, partidoId, sectorId]
+  );
 
   // Auxiliar para generar el mapa de asientos
   const generateSeats = useCallback((sector, partido, ownSelected) => {

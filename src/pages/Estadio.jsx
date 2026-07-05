@@ -3,7 +3,7 @@
 // Partidos (ver estadio-actions.js) y navega a Asientos.
 function Estadio() {
   return (
-    <div className="container py-5">
+    <div className="container-fluid px-4 py-5">
       <h1>Estadio</h1>
       {/* TODO: mostrar info del partido/estadio, botón "Elegir asientos" */}
     </div>
