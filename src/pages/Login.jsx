@@ -4,46 +4,96 @@
 // esto se resuelve seteando el usuario en AuthContext (useAuth) y usando
 // <Navigate> de react-router-dom en vez de window.location.href.
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import PasswordInput from "../components/PasswordInput.jsx";
 
 function Login() {
-  const [email, setEmail] = useState("");
+  const [identificador, setIdentificador] = useState("");
   const [password, setPassword] = useState("");
+  const [mensaje, setMensaje] = useState({ texto: "", tipo: "" });
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    // TODO: reemplazar por el fetch real al backend (ver backend/routes/usuarios.js)
-    login({ email, rol: "cliente" });
-    navigate("/");
+    setMensaje({ texto: "Verificando credenciales...", tipo: "" });
+
+    try {
+      const usuarioLogueado = await login(identificador, password);
+
+      if (!usuarioLogueado) {
+        setMensaje({ texto: "Usuario o contraseña incorrectos.", tipo: "danger" });
+        return;
+      }
+
+      setMensaje({ texto: "¡Inicio de sesión exitoso! Redirigiendo...", tipo: "success" });
+
+      setTimeout(() => {
+        navigate(usuarioLogueado.rol === "admin" ? "/admin" : "/");
+      }, 1000);
+    } catch {
+      setMensaje({ texto: "No se pudo conectar con el servidor. ¿Está corriendo el backend?", tipo: "danger" });
+    }
   }
 
   return (
-    <div className="container py-5">
-      <h1>Iniciar sesión</h1>
-      <form onSubmit={handleSubmit}>
-        {/* TODO: portar estructura/estilos reales de login.html */}
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          className="form-control mb-2"
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Contraseña"
-          className="form-control mb-2"
-        />
-        <button type="submit" className="btn btn-brand">
-          Ingresar
-        </button>
-      </form>
-    </div>
+    <main className="auth-bg d-flex flex-column min-vh-100 font-montserrat text-white justify-content-center align-items-center py-5">
+      <div className="w-520">
+        <h1 className="h2 fw-bold text-uppercase mb-4 text-start lh-sm spacing05">
+          COMPRÁ TICKETS AL INSTANTE<br />EN UN SOLO LUGAR
+        </h1>
+
+        <div className="d-flex align-items-center text-white-70 mb-4 fs-6 opacity-75">
+          <i className="bx bx-user me-2 fs-5"></i> Ingresá a tu cuenta
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3 text-start">
+            <label htmlFor="username" className="form-label small fw-medium text-white-70 mb-2">
+              Usuario
+            </label>
+            <div className="auth-input-wrapper">
+              <span className="auth-input-icon"><i className="bx bx-user"></i></span>
+              <input
+                type="text"
+                className="form-control auth-input"
+                id="username"
+                placeholder="Ingresá tu usuario"
+                value={identificador}
+                onChange={(e) => setIdentificador(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <PasswordInput
+            id="password"
+            label="Contraseña"
+            placeholder="Ingresá tu contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          {mensaje.texto && (
+            <p className={`fw-bold small text-center mb-3 text-${mensaje.tipo || "white"}`}>
+              {mensaje.texto}
+            </p>
+          )}
+
+          <button type="submit" className="btn btn-brand btn-lg w-100 py-3 fw-bold text-uppercase rounded-3 mb-4 shadow-sm fs-6">
+            Ingresá
+          </button>
+
+          <div className="text-center small text-white-50 opacity-75">
+            ¿No tenés cuenta?
+            <Link to="/registro" className="text-brand fw-bold text-decoration-none ms-1">
+              ¡Registrate ahora!
+            </Link>
+          </div>
+        </form>
+      </div>
+    </main>
   );
 }
 

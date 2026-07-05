@@ -1207,7 +1207,7 @@ body {
  * de fondo para garantizar que el texto blanco siempre sea legible en cualquier pantalla.
  */
 .hero-section {
-  background-image: linear-gradient(var(--overlay-dark), var(--overlay-dark)), url('../assets/img/estadio-hero.jpg');
+  background-image: linear-gradient(var(--overlay-dark), var(--overlay-dark)), url('/assets/img/estadio-hero.jpg');
   background-size: cover;
   /* Cubre todo el espacio disponible sin estirar la imagen */
   background-position: center;
@@ -1240,7 +1240,7 @@ body {
 
 
 .auth-bg {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(10, 10, 10, 0.9)), url('../assets/img/estadio.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(10, 10, 10, 0.9)), url('/assets/img/estadio.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
