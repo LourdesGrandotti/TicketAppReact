@@ -1,4 +1,3 @@
-
 export default function SummaryPanel({ selectedSeatsData, onRemoveSeat, onContinue }) {
   const total = selectedSeatsData.reduce((sum, seat) => sum + seat.precio, 0);
 
@@ -6,10 +5,9 @@ export default function SummaryPanel({ selectedSeatsData, onRemoveSeat, onContin
     <aside className="d-flex flex-column w-100" aria-label="Detalle de selección" style={{ borderLeft: "1px solid #eee", paddingLeft: "2rem" }}>
       {/* Encabezado de columnas */}
       <div className="row w-100 text-secondary fw-bold mb-3 border-bottom pb-3 m-0" role="row">
-        <div className="col-3 px-1">Asiento</div>
-        <div className="col-3 px-1 text-center">Fila</div>
-        <div className="col-3 px-1 text-center">Cantidad</div>
-        <div className="col-3 px-1 text-end">Precio</div>
+        <div className="col-4 px-1">Asiento</div>
+        <div className="col-4 px-1 text-center">Fila</div>
+        <div className="col-4 px-1 text-end">Precio</div>
       </div>
 
       {/* Lista de asientos seleccionados */}
@@ -26,10 +24,9 @@ export default function SummaryPanel({ selectedSeatsData, onRemoveSeat, onContin
               style={{ backgroundColor: "#fff" }}
               role="listitem"
             >
-              <div className="col-3 px-1" style={{ color: "#555" }}>{seat.numero}</div>
-              <div className="col-3 px-1 text-center" style={{ color: "#555" }}>{seat.fila}</div>
-              <div className="col-3 px-1 text-center" style={{ color: "#555" }}>1</div>
-              <div className="col-3 px-1 text-end fw-bold d-flex justify-content-end align-items-center gap-1" style={{ color: "#333" }}>
+              <div className="col-4 px-1" style={{ color: "#555" }}>{seat.numero}</div>
+              <div className="col-4 px-1 text-center" style={{ color: "#555" }}>{seat.fila}</div>
+              <div className="col-4 px-1 text-end fw-bold d-flex justify-content-end align-items-center gap-1" style={{ color: "#333" }}>
                 ${seat.precio.toLocaleString('es-AR')}
                 <button
                   type="button"
@@ -67,4 +64,3 @@ export default function SummaryPanel({ selectedSeatsData, onRemoveSeat, onContin
     </aside>
   );
 }
-
