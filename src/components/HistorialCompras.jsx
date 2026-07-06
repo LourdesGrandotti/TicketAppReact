@@ -21,7 +21,7 @@ function HistorialCompras({ idUsuario }) {
       JSON.parse(localStorage.getItem("MATCHES")) || DEFAULT_MATCHES
     ).flat();
 
-    let ultimoPartido = null;
+    const partidosPasados = [];
     const proximosPartidos = [];
 
     misCompras.forEach((compra) => {
@@ -34,26 +34,30 @@ function HistorialCompras({ idUsuario }) {
       const entrada = { ...partido, asientosTxt };
 
       if (esPartidoPasado(partido.date)) {
-        if (!ultimoPartido) ultimoPartido = entrada;
+        partidosPasados.push(entrada);
       } else {
         proximosPartidos.push(entrada);
       }
     });
 
-    return { ultimoPartido, proximosPartidos };
+    return { partidosPasados, proximosPartidos };
   }
 
-  const { ultimoPartido, proximosPartidos } = obtenerMisTickets();
+  const { partidosPasados, proximosPartidos } = obtenerMisTickets();
 
   return (
     <section className="mt-5 pt-4 border-top">
       <h2 className="text-danger fw-bold mb-4">Mis tickets</h2>
 
-      <div className="row g-4">
+      <div className="row g-4 align-items-start">
         <div className="col-lg-3" id="contenedor-ultimo-partido">
-          <h5 className="text-muted mb-3 small fw-bold">Último partido</h5>
-          {ultimoPartido ? (
-            <TicketCard partido={ultimoPartido} variante="pasado" />
+          <h5 className="text-muted mb-3 small fw-bold">Partidos pasados</h5>
+          {partidosPasados.length > 0 ? (
+            <div className="d-flex flex-column gap-3">
+              {partidosPasados.map((p) => (
+                <TicketCard key={p.id} partido={p} variante="pasado" />
+              ))}
+            </div>
           ) : (
             <p className="text-secondary small">No registrás partidos anteriores.</p>
           )}
