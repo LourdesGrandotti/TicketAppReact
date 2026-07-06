@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import partidos from "../data/partidos.js";
 import { STADIUM_SECTIONS, getSectorCategory } from "../data/stadiumData.js";
+import MatchBanner from "../components/MatchBanner";
 
 // Función solicitada por el usuario
 export function obtenerSimulacionVentasSector(nombreSector) {
@@ -79,10 +80,10 @@ function Estadio() {
       <div className="ta-map-wrapper position-relative" style={{ minHeight: "400px" }}>
         <div className="ta-zoom-panel position-absolute top-0 start-0 m-3 d-flex flex-column gap-2" style={{ zIndex: 10 }}>
           <button className="btn btn-danger btn-sm text-white rounded-1" onClick={handleZoomIn}>
-            <i className="bi bi-plus-lg">+</i>
+            <i className="bi bi-plus-lg"></i>
           </button>
           <button className="btn btn-light btn-sm text-dark border rounded-1" onClick={handleZoomOut}>
-            <i className="bi bi-dash-lg">-</i>
+            <i className="bi bi-dash-lg"></i>
           </button>
         </div>
 
@@ -156,7 +157,7 @@ function Estadio() {
 
     const cat = getSectorCategory(sectorElegido);
     const precio = getPrecio(cat);
-    
+
     // Capitalize category name for display
     const catName = cat.charAt(0).toUpperCase() + cat.slice(1);
 
@@ -173,7 +174,7 @@ function Estadio() {
             <div className="tr-sector fw-bold" style={{ width: "40%", color: "#333" }}>
               {sectorElegido} ({catName})
             </div>
-            
+
             <div className="tr-qty text-center" style={{ width: "30%" }}>
               <select
                 className="ta-qty-sel border rounded px-3 py-1"
@@ -186,7 +187,7 @@ function Estadio() {
                 ))}
               </select>
             </div>
-            
+
             <div className="tr-price text-end fw-bold d-flex align-items-center justify-content-end gap-3" style={{ width: "30%", color: "#333" }}>
               ${precio.toLocaleString("es-AR")}
               <i className="bi bi-cart-fill fs-5" style={{ color: "#ed194d" }}></i>
@@ -210,41 +211,12 @@ function Estadio() {
 
   return (
     <div>
-      {/* Barra de info superior según mockup */}
-      <div className="ta-match-bar" style={{ backgroundColor: "#ed194d", padding: "14px 40px" }}>
-        <div className="ta-bar-inner d-flex align-items-center gap-4 text-white">
-          <div className="d-flex align-items-center gap-3">
-            {home?.flag ? (
-              <img src={`https://flagcdn.com/w40/${home.flag}.png`} alt={local} className="rounded" style={{ width: 44, height: 28, objectFit: "cover" }} />
-            ) : (
-              <div className="ta-flag-placeholder bg-secondary text-white rounded d-flex align-items-center justify-content-center" style={{ width: 44, height: 28 }}>
-                {local.slice(0, 2).toUpperCase()}
-              </div>
-            )}
-            <span className="fw-bold">VS</span>
-            {away?.flag ? (
-              <img src={`https://flagcdn.com/w40/${away.flag}.png`} alt={visitante} className="rounded" style={{ width: 44, height: 28, objectFit: "cover" }} />
-            ) : (
-              <div className="ta-flag-placeholder bg-secondary text-white rounded d-flex align-items-center justify-content-center" style={{ width: 44, height: 28 }}>
-                {visitante.slice(0, 2).toUpperCase()}
-              </div>
-            )}
-          </div>
-          
-          <div style={{ borderLeft: "1px solid rgba(255,255,255,0.3)", height: "40px" }}></div>
-          
-          <div className="d-flex flex-column" style={{ fontSize: "0.85rem" }}>
-            <div className="fw-bold">{date} | {time}</div>
-            <div>{estadio}</div>
-            <div className="opacity-75">{ciudad}</div>
-          </div>
-        </div>
-      </div>
+      <MatchBanner partidoId={idPartido} />
 
       <main className="ta-container py-5 px-4 mx-auto" style={{ maxWidth: "1200px" }}>
         <div className="mb-4">
-          <button 
-            className="btn btn-brand rounded-pill px-4 fw-bold text-white" 
+          <button
+            className="btn btn-brand rounded-pill px-4 fw-bold text-white"
             style={{ backgroundColor: "#ed194d", border: "none" }}
             onClick={() => navigate("/partidos")}
           >
