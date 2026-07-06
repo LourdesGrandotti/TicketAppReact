@@ -105,3 +105,15 @@ export const STADIUM_SECTIONS = (() => {
 
   return s;
 })();
+
+const PRECIOS_POR_CATEGORIA = {
+  palco: 500000,
+  platea: 300000,
+  norte: 250000,
+  sur: 250000,
+};
+
+export const getPrecioPorSector = (sid) => {
+  const categoria = getSectorCategory(sid);
+  return PRECIOS_POR_CATEGORIA[categoria] || 250000;
+};

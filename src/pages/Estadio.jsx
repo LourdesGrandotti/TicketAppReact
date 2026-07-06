@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import partidos from "../data/partidos.js";
-import { STADIUM_SECTIONS, getSectorCategory } from "../data/stadiumData.js";
+import { STADIUM_SECTIONS, getSectorCategory, getPrecioPorSector } from "../data/stadiumData.js";
 import MatchBanner from "../components/MatchBanner";
 
 // Función solicitada por el usuario
