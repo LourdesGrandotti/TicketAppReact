@@ -1,13 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useCart } from '../context/CartContext.jsx';
-
-// Precios configurables por zona de estadio
-const PRECIOS_POR_ZONA = {
-  A: 270000,
-  B: 180000,
-  C: 140000,
-  D: 350000,
-};
+import { getPrecioPorSector } from '../data/stadiumData.js';
 
 const FILAS_SECTOR = 8;
 const ASIENTOS_POR_FILA = 6;
@@ -34,9 +27,7 @@ export default function useSeating(sectorId = 'A1', partidoId = '', initialLimit
 
   // Auxiliar para generar el mapa de asientos
   const generateSeats = useCallback((sector, partido, ownSelected) => {
-    const zona = sector.charAt(0).toUpperCase();
-    const precio = PRECIOS_POR_ZONA[zona] || 270000;
-
+    const precio = getPrecioPorSector(sector);
     // Obtener asientos comprados para este partido (simulando checkout en base de datos)
     const compras = JSON.parse(localStorage.getItem('compras')) || [];
     const asientosComprados = [];

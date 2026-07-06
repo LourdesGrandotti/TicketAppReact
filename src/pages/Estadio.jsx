@@ -68,12 +68,6 @@ function Estadio() {
     navigate(`/asientos?${params.toString()}`);
   };
 
-  const getPrecio = (cat) => {
-    if (cat === "palco") return 500000;
-    if (cat === "platea") return 300000;
-    return 250000; // norte y sur
-  };
-
   // Render SVG del Estadio
   const renderEstadioMap = () => {
     return (
@@ -156,7 +150,7 @@ function Estadio() {
     if (!sectorElegido) return null;
 
     const cat = getSectorCategory(sectorElegido);
-    const precio = getPrecio(cat);
+    const precio = getPrecioPorSector(sectorElegido);
 
     // Capitalize category name for display
     const catName = cat.charAt(0).toUpperCase() + cat.slice(1);
