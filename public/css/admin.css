@@ -1,0 +1,159 @@
+/* Aplicación de fuentes generales */
+h1,
+h2,
+h3,
+.navbar-brand {
+  font-family: 'Nulshock', sans-serif;
+}
+
+h4,
+h5,
+h6,
+.nav-link,
+label,
+table th,
+button {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
+
+
+/* ESTILOS DE LA SIDEBAR (PÍLDORAS REDONDEADAS)*/
+.sidebar .nav-link {
+  color: var(--dark) !important;
+  border-radius: 10px !important;
+  margin: 6px 16px;
+  transition: all 0.25s ease-in-out;
+}
+
+.sidebar .nav-link:hover {
+  background-color: var(--card-bg) !important;
+  color: var(--primary) !important;
+  transform: translateX(4px);
+}
+
+.sidebar .nav-link.active {
+  background-color: var(--primary) !important;
+  color: var(--light) !important;
+  box-shadow: 0 4px 12px rgba(237, 25, 77, 0.25);
+}
+
+.sidebar .nav-link.active i {
+  color: var(--light) !important;
+}
+
+/* TARJETA ESPECIAL: PRÓXIMO PARTIDO (KPI ROJO)*/
+#kpi-proximo-partido-contenedor {
+  background-color: var(--primary) !important;
+  border: none !important;
+  color: var(--light) !important;
+  box-shadow: 0 6px 18px rgba(237, 25, 77, 0.3) !important;
+}
+
+#kpi-proximo-partido-contenedor .badge-kpi {
+  background-color: rgba(254, 254, 254, 0.2) !important;
+  color: var(--light) !important;
+}
+
+#kpi-proximo-partido-contenedor * {
+  color: var(--light) !important;
+}
+
+/* FOCOS E INTERACCIONES DE CAMPOS (COLORES DE MARCA)*/
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(237, 25, 77, 0.15) !important;
+}
+
+
+
+/* Clases de tamaños auxiliares */
+.xsmall {
+  font-size: 0.72rem;
+}
+
+.extra-small {
+  font-size: 0.75rem;
+}
+
+
+
+/* ELEMENTOS DE DISEÑO ADAPTADOS PARA ELIMINAR ESTILOS INLINE DEL HTML*/
+.navbar-logo {
+  height: 35px;
+}
+
+.avatar-circle {
+  width: 40px;
+  height: 40px;
+}
+
+.badge-circle {
+  width: 35px;
+  height: 35px;
+}
+
+.flag-wrapper {
+  width: 45px;
+  height: 30px;
+  overflow: hidden;
+}
+
+.chart-container-barras {
+  height: 300px;
+}
+
+.chart-container-dona {
+  height: 200px;
+}
+
+footer {
+  background-color: var(--primary) !important;
+}
+
+.footer-logo {
+  height: 40px;
+  filter: brightness(0) invert(1);
+}
+
+.legend-color-dot {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+/* PAGINACIÓN PERSONALIZADA*/
+.pagination .page-item {
+  margin: 0 2px;
+}
+
+.pagination .page-item .page-link {
+  width: 34px;
+  height: 34px;
+  border: 1px solid #e6e6e6;
+  background-color: transparent;
+  transition: all 0.2s;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: #ffffff !important;
+}
+
+.pagination .page-item.disabled .page-link {
+  background-color: transparent;
+  border-color: transparent;
+  color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination .page-item:not(.active):not(.disabled) .page-link:hover {
+  background-color: #f8f9fa;
+  border-color: #cccccc;
+  color: var(--primary) !important;
+}

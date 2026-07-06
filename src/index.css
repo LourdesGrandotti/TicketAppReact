@@ -1,0 +1,10 @@
+/* TicketApp React — Reset mínimo. Los estilos de diseño viven en /public/css/styles.css */
+body {
+  margin: 0;
+}
+
+#root {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
