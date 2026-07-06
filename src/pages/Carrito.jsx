@@ -34,7 +34,7 @@ function Carrito() {
   }
 
   return (
-    <main className="container-fluid my-2 flex-grow-1 px-4">
+    <main className="container my-2 flex-grow-1 w-800">
       <h1 className="checkout-main-title text-center mt-3 mb-0">Carrito de Compra</h1>
 
       <StepperCheckout pasoActivo={paso} />
