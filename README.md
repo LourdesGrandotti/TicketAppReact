@@ -132,7 +132,7 @@ cd TicketAppReact
 3. Crea un archivo `.env` en la raíz de la carpeta `backend` guiándote del siguiente formato:
    ```env
    PORT=3000
-   MONGODB_URI=mongodb:/ticketapp
+   MONGODB_URI=mongodb://127.0.0.1:27017/ticketapp
    ```
    *(Nota: Puedes cambiar la URI de conexión si usas MongoDB Atlas o tienes otra configuración en tu puerto local)*.
 
